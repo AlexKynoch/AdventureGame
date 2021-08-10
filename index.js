@@ -125,8 +125,17 @@ class Item {
 
 
     get(item) {
-        backPack.push(this);
+        console.log(this.name)
+        if (this.name == "Safe") {
+            document.getElementById("warningArea").innerHTML = "you cant get the safe it is too heavy";
+        } else {
+            backPack.push(this);
+            for (let i = 0; i < backPack.length; i++) {
+                document.getElementById("backPackPrint").innerHTML = "Your back pack contains: " + JSON.stringify(backPack[i]);
+                // document.getElementById("warningArea").innerHTML = "Your back pack contains: " + JSON.stringify(backPack[i]);
 
+            }
+        }
     }
 }
 
@@ -156,6 +165,8 @@ const Office = new Room("Office", "a desk and some chairs");
 const Library = new Room("Library", "Some dusty books");
 const DiningRoom = new Room("Dining Room", "a Table");
 const Bathroom = new Room("Bathroom", "a bath");
+
+
 
 //link rooms
 Entrance.linkRoom("north", Hall);
@@ -188,7 +199,6 @@ DiningRoom.linkRoom("west", Kitchen);
 Bathroom.linkRoom("north", Library);
 
 
-
 //item objects
 const Money = new Item("Note", " a £20 note.");
 const FloorPlan = new Item("Floor Plan", "framed on the wall");
@@ -202,7 +212,7 @@ const Safe = new Item("Safe", "The safe is locked.")
 // console.log(Spider.describe())
 
 
-//link items to rooms?????????
+//link items to rooms
 
 Entrance.Item = Money;
 Hall.Item = FloorPlan;
@@ -216,6 +226,7 @@ Office.Item = Safe;
 
 
 
+
 //Jewelry objects
 const Necklace = new Jewelry("Tiara", "its really shiny", "neck")
 // console.log(Necklace.describe())
@@ -223,9 +234,9 @@ const Necklace = new Jewelry("Tiara", "its really shiny", "neck")
 // console.log(Necklace.wear("neck"))
 
 //Character objects
-const Guard = new Character("Gary", "Security Guard")
+const Guard = new Enemy("Gary", "Security Guard")
 // console.log(Guard.describe());
-
+Office.Enemy = Guard;
 //Enemy objects
 const Dagger = new Enemy("Dagger", "its shiny", "throw")
 // console.log(Dagger.describe())
