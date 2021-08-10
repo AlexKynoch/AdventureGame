@@ -128,15 +128,32 @@ class Item {
         console.log(this.name)
         if (this.name == "Safe") {
             document.getElementById("warningArea").innerHTML = "you cant get the safe it is too heavy";
+            document.getElementById("warningArea").style.display = "none";
         } else {
+            document.getElementById("itemArea").style.display = "none;"
+
             backPack.push(this);
             for (let i = 0; i < backPack.length; i++) {
-                document.getElementById("backPackPrint").innerHTML = "Your back pack contains: " + JSON.stringify(backPack[i]);
-                // document.getElementById("warningArea").innerHTML = "Your back pack contains: " + JSON.stringify(backPack[i]);
+                const names = backPack.map(item => {
+                    document.getElementById("backPackPrint").innerHTML = "Your back pack contains: " + JSON.stringify(backPack[i].name);
+                    return backPack.name;
+                })
+
 
             }
         }
     }
+    use(item) {
+        alert("im use function");
+    }
+    look(item) {
+        alert("im look function")
+    }
+    talk(item) {
+        alert("im talk function")
+    }
+
+
 }
 
 
@@ -153,6 +170,7 @@ class Jewelry extends Item {
             return false;
         }
     }
+
 }
 
 //room objects
@@ -269,7 +287,7 @@ function startGame() {   //start in the Entrance
         if (event.key === "Enter") {
             command = document.getElementById("ui").value;
             const directions = ["north", "south", "east", "west"]
-            const commands = ["get"]
+            const commands = ["get", "use", "look", "talk"]
             if (directions.includes(command.toLowerCase())) {
                 currentRoom = currentRoom.move(command);
                 // console.log(currentRoom);
