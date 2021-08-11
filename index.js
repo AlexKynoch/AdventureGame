@@ -1,8 +1,9 @@
 class Room {
-    constructor(name, description) {
+    constructor(name, description, item) {
         this._name = name;
         this._description = description;
         this._linkedRooms = {};
+        this.item = item
     }
     get name() {
         return this._name;  // returns kitchen you can see a sink
@@ -25,22 +26,42 @@ class Room {
     }
 
     describe() {
+        if (this.name !== "Office") {
+            document.getElementById("itemArea").style.display = "block";
+        }
+        if (this.item) {
+            document.getElementById("itemArea").innerHTML = "You see a " + this.item._description
+        }
+        else {
+            document.getElementById("itemArea").style.display = "none"
+
+        }
+
         return "Your are in the " + this.name + " you can see " + this._description;
     }
 
     linkRoom(direction, roomToLink) {
         this._linkedRooms[direction] = roomToLink;
     }
+    linkItem(item) {
+        this.item = item
+    }
+    removeItem() {
+        this.item = null
+    }
 
     move(direction) {
         if (direction in this._linkedRooms) {
+            document.getElementById("warningArea").style.display = "none";
             return this._linkedRooms[direction];
+
         } else {
-            alert("You cant go taht way");
+            alert("You cant go that way");
             return this;
         }
 
     }
+
 }
 class Character {
     constructor(name, description) {
@@ -122,25 +143,59 @@ class Item {
         return "you find a  " + this.name + " it is " + this._description;
     }
 
+    // remove(item) {
 
+    //     // document.getElementById("itemArea").style.display = "none";
+
+    // }
 
     get(item) {
-        console.log(this.name)
+        // console.log(this.name)
         if (this.name == "Safe") {
             document.getElementById("warningArea").innerHTML = "you cant get the safe it is too heavy";
-            document.getElementById("warningArea").style.display = "none";
+            document.getElementById("warningArea").style.display = "block";
+
         } else {
             document.getElementById("itemArea").style.display = "none;"
 
+            let back = this.name; //"Note"
+            backPack.map((item) => back = item._name + ", " + back)
+
+            // this line picks it up
             backPack.push(this);
-            for (let i = 0; i < backPack.length; i++) {
-                const names = backPack.map(item => {
-                    document.getElementById("backPackPrint").innerHTML = "Your back pack contains: " + JSON.stringify(backPack[i].name);
-                    return backPack.name;
-                })
+            console.log(this.name)
+            console.log(backPack);
 
+            let x = false
+            backPack.map((item) => {
+                if (JSON.stringify(backPack).includes(item.name)) {
+                    x = true
+                }
 
+            })
+            if (x) {
+                console.log("passed")
+                document.getElementById("itemArea").style.display = "none";
+            } else {
+                document.getElementById("warningArea").style.display = "none";
             }
+
+
+            // this line must remove it from parent room
+            // Only print the item description if item is in room
+
+
+
+            // Entry.removeItem()
+            // removeItem function in room
+            // function removes the item
+            // function hides the html elem
+
+            // 
+            document.getElementById("backPackPrint").innerHTML = "Backpack has: " + back;
+
+
+
         }
     }
     use(item) {
@@ -174,15 +229,7 @@ class Jewelry extends Item {
 }
 
 //room objects
-const Entrance = new Room("Entrance", "Steps lead up to an old wooden paneled door");
-const Hall = new Room("Hall", "a reception desk.");
-const Kitchen = new Room("Kitchen", "a sink");
-const Garden = new Room("Garden", "Some dead plants")
-const Ballroom = new Room("Ballroom", "a huge dancefloor")
-const Office = new Room("Office", "a desk and some chairs");
-const Library = new Room("Library", "Some dusty books");
-const DiningRoom = new Room("Dining Room", "a Table");
-const Bathroom = new Room("Bathroom", "a bath");
+
 
 
 
@@ -229,18 +276,38 @@ const Net = new Item("Net", "The net has a fine mesh for catching fish.")
 const Safe = new Item("Safe", "The safe is locked.")
 // console.log(Spider.describe())
 
+const Entrance = new Room("Entrance", "Steps lead up to an old wooden paneled door", Money);
+const Hall = new Room("Hall", "a reception desk.");
+const Kitchen = new Room("Kitchen", "a sink");
+const Garden = new Room("Garden", "Some dead plants")
+const Ballroom = new Room("Ballroom", "a huge dancefloor")
+const Office = new Room("Office", "a desk and some chairs");
+const Library = new Room("Library", "Some dusty books");
+const DiningRoom = new Room("Dining Room", "a Table");
+const Bathroom = new Room("Bathroom", "a bath");
 
 //link items to rooms
+Entrance.linkItem(Money);
+Hall.linkItem(FloorPlan);
+Library.linkItem(Flyer);
+Bathroom.linkItem(Spider);
+DiningRoom.linkItem(CandleStick);
+Kitchen.linkItem(Key);
+Garden.linkItem(GrassHopper);
+Ballroom.linkItem(Net);
+Office.linkItem(Safe);
 
-Entrance.Item = Money;
-Hall.Item = FloorPlan;
-Library.Item = Flyer;
-Bathroom.Item = Spider;
-DiningRoom.Item = CandleStick;
-Kitchen.Item = Key;
-Garden.Item = GrassHopper;
-Ballroom.Item = Net;
-Office.Item = Safe;
+
+
+// Entrance.Item = Money;
+// Hall.Item = FloorPlan;
+// Library.Item = Flyer;
+// Bathroom.Item = Spider;
+// DiningRoom.Item = CandleStick;
+// Kitchen.Item = Key;
+// Garden.Item = GrassHopper;
+// Ballroom.Item = Net;
+// Office.Item = Safe;
 
 
 
@@ -277,6 +344,20 @@ function displayRoomInfo(room) {
 }
 
 
+function removeItem() {
+    switch (backPack.includes('')) {
+        case ("Note"):
+            document.getElementById("itemArea").style.display = "none";
+            break;
+        case ("Net"):
+            document.getElementById("itemArea").style.display = "none";
+            break;
+        default:
+            console.log("oops not sure what happened there");
+    }
+}
+
+
 
 function startGame() {   //start in the Entrance
     currentRoom = Entrance;
@@ -288,13 +369,16 @@ function startGame() {   //start in the Entrance
             command = document.getElementById("ui").value;
             const directions = ["north", "south", "east", "west"]
             const commands = ["get", "use", "look", "talk"]
+            console.log(command)
             if (directions.includes(command.toLowerCase())) {
                 currentRoom = currentRoom.move(command);
-                // console.log(currentRoom);
                 displayRoomInfo(currentRoom);
+                document.getElementById("ui").value = "";
             } else if (commands.includes(command)) {
-                currentRoom.Item.get();
-                console.log(backPack);
+                console.log(currentRoom)
+                currentRoom.item.get();
+                currentRoom.removeItem()
+                document.getElementById("ui").value = "";
             } else {
                 document.getElementById("ui").value = "";
                 alert("thats is not a valid command please try again")
