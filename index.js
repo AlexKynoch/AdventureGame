@@ -277,14 +277,14 @@ const Safe = new Item("Safe", "The safe is locked.")
 // console.log(Spider.describe())
 
 const Entrance = new Room("Entrance", "Steps lead up to an old wooden paneled door", Money);
-const Hall = new Room("Hall", "a reception desk.");
-const Kitchen = new Room("Kitchen", "a sink");
-const Garden = new Room("Garden", "Some dead plants")
-const Ballroom = new Room("Ballroom", "a huge dancefloor")
-const Office = new Room("Office", "a desk and some chairs");
-const Library = new Room("Library", "Some dusty books");
-const DiningRoom = new Room("Dining Room", "a Table");
-const Bathroom = new Room("Bathroom", "a bath");
+const Hall = new Room("Hall", "a reception desk.", FloorPlan);
+const Kitchen = new Room("Kitchen", "a sink", Key);
+const Garden = new Room("Garden", "Some dead plants", GrassHopper)
+const Ballroom = new Room("Ballroom", "a huge dancefloor", Net)
+const Office = new Room("Office", "a desk and some chairs", Safe);
+const Library = new Room("Library", "Some dusty books", Flyer);
+const DiningRoom = new Room("Dining Room", "a Table", CandleStick);
+const Bathroom = new Room("Bathroom", "a bath", Spider);
 
 //link items to rooms
 Entrance.linkItem(Money);
