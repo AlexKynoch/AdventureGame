@@ -1,9 +1,9 @@
-// window.onload = function () {
-//     document.getElementById("textarea").style.display = "none";
-//     document.getElementById("itemArea").style.display = "none";
-//     document.getElementById("startArea").style.display = "block";
-//     document.getElementById("startArea").innerHTML = "Type start to play.";
-// }
+window.onload = function () {
+    // document.getElementById("textarea").style.display = "none";
+    document.getElementById("itemArea").style.display = "none";
+    // document.getElementById("startArea").style.display = "block";
+    // document.getElementById("startArea").innerHTML = "Type start to play.";
+}
 
 class Room {
     constructor(name, description, item) {
@@ -338,6 +338,21 @@ const Dagger = new Enemy("Dagger", "its shiny", "throw")
 // }
 
 
+function startPage() {
+    document.getElementById("startarea").innerHTML = "Type start to play."
+
+    document.getElementById("textarea").style.display = "none";
+
+}
+
+function setUpPage() {
+    document.getElementById("textarea").style.display = "block";
+    document.getElementById("image").style.display = "none";
+    document.getElementById("startarea").style.display = "none";
+    document.getElementById("itemArea").style.display = "block";
+    document.getElementById("ui").value = '';
+}
+
 function talk() {
 
     // if (this.command == "talk" && this.currentRoom == "Office") {
@@ -412,7 +427,8 @@ function removeItem() {
 
 
 function startGame() {   //start in the Entrance
-    // startArea();
+
+    startPage();
     currentRoom = Entrance;
     backPack = [];
     displayRoomInfo(currentRoom);
@@ -420,8 +436,9 @@ function startGame() {   //start in the Entrance
     document.addEventListener("keydown", function (event) {
         if (event.key === "Enter") {
             command = document.getElementById("ui").value;
+
             const directions = ["north", "south", "east", "west"]
-            const commands = ["get", "use", "look", "talk"]
+            const commands = ["get", "use", "look", "talk", "start"]
 
             // console.log(command)
             if (directions.includes(command.toLowerCase())) {
@@ -437,6 +454,10 @@ function startGame() {   //start in the Entrance
 
             } else if (command == "talk") {
                 talk();
+
+
+            } else if (command == "start") {
+                setUpPage();
 
             } else {
 
