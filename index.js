@@ -43,6 +43,7 @@ class Room {
     linkRoom(direction, roomToLink) {
         this._linkedRooms[direction] = roomToLink;
     }
+
     linkItem(item) {
         this.item = item
     }
@@ -227,10 +228,30 @@ class Jewelry extends Item {
     }
 
 }
+//item objects
+const Money = new Item("Note", " a £20 note.");
+const FloorPlan = new Item("Floor Plan", "framed on the wall");
+const Flyer = new Item("Flyer", " A5 size and something is writen on it");
+const Spider = new Item("Spider", "its a fluffy tarantula");
+const CandleStick = new Item("Candlestick", "It looks heavy");
+const Key = new Item("Key", "It is big and silver colored - and looks like it might open a safe.")
+const GrassHopper = new Item("Grass Hopper", "looks like its sunbathing on a rock.")
+const Net = new Item("Net", "The net has a fine mesh for catching fish.")
+const Safe = new Item("Safe", "The safe is locked.")
+// console.log(Spider.describe())
+
 
 //room objects
 
-
+const Entrance = new Room("Entrance", "Steps lead up to an old wooden paneled door", Money);
+const Hall = new Room("Hall", "a reception desk.", FloorPlan);
+const Kitchen = new Room("Kitchen", "a sink", Key);
+const Garden = new Room("Garden", "Some dead plants", GrassHopper)
+const Ballroom = new Room("Ballroom", "a huge dance floor", Net)
+const Office = new Room("Office", "a desk and some chairs", Safe);
+const Library = new Room("Library", "Some dusty books", Flyer);
+const DiningRoom = new Room("Dining Room", "a Table", CandleStick);
+const Bathroom = new Room("Bathroom", "a bath", Spider);
 
 
 //link rooms
@@ -264,38 +285,8 @@ DiningRoom.linkRoom("west", Kitchen);
 Bathroom.linkRoom("north", Library);
 
 
-//item objects
-const Money = new Item("Note", " a £20 note.");
-const FloorPlan = new Item("Floor Plan", "framed on the wall");
-const Flyer = new Item("Flyer", " A5 size and something is writen on it");
-const Spider = new Item("Spider", "its a fluffy tarantula");
-const CandleStick = new Item("Candlestick", "It looks heavy");
-const Key = new Item("Key", "It is big and silver colored - and looks like it might open a safe.")
-const GrassHopper = new Item("Grass Hopper", "looks like its sunbathing on a rock.")
-const Net = new Item("Net", "The net has a fine mesh for catching fish.")
-const Safe = new Item("Safe", "The safe is locked.")
-// console.log(Spider.describe())
 
-const Entrance = new Room("Entrance", "Steps lead up to an old wooden paneled door", Money);
-const Hall = new Room("Hall", "a reception desk.", FloorPlan);
-const Kitchen = new Room("Kitchen", "a sink", Key);
-const Garden = new Room("Garden", "Some dead plants", GrassHopper)
-const Ballroom = new Room("Ballroom", "a huge dancefloor", Net)
-const Office = new Room("Office", "a desk and some chairs", Safe);
-const Library = new Room("Library", "Some dusty books", Flyer);
-const DiningRoom = new Room("Dining Room", "a Table", CandleStick);
-const Bathroom = new Room("Bathroom", "a bath", Spider);
 
-//link items to rooms
-Entrance.linkItem(Money);
-Hall.linkItem(FloorPlan);
-Library.linkItem(Flyer);
-Bathroom.linkItem(Spider);
-DiningRoom.linkItem(CandleStick);
-Kitchen.linkItem(Key);
-Garden.linkItem(GrassHopper);
-Ballroom.linkItem(Net);
-Office.linkItem(Safe);
 
 
 
@@ -319,9 +310,9 @@ const Necklace = new Jewelry("Tiara", "its really shiny", "neck")
 // console.log(Necklace.wear("neck"))
 
 //Character objects
-const Guard = new Enemy("Gary", "Security Guard")
+const Guard = new Character("Gary", "Security Guard")
 // console.log(Guard.describe());
-Office.Enemy = Guard;
+Office.Character = Guard;
 //Enemy objects
 const Dagger = new Enemy("Dagger", "its shiny", "throw")
 // console.log(Dagger.describe())
@@ -333,8 +324,28 @@ const Dagger = new Enemy("Dagger", "its shiny", "throw")
 
 // document.getElementById("textarea").innerHTML = Kitchen.describe();
 
+function displayCharacterInfo() {
+
+    // console.log(Guard.describe());
+    document.getElementById("characterArea").style.display = "block";
+    document.getElementById("characterArea").innerHTML = Guard.describe();
+}
+
+
 function displayRoomInfo(room) {
+    console.log(room)
     content = room.describe();
+
+    console.log(room.name)
+    if (room.name == "Office") {
+        displayCharacterInfo();
+
+    } else {
+        document.getElementById("characterArea").style.display = "none";
+    }
+
+
+
     document.getElementById("textarea").innerHTML = content;
     if (room.Item) {
         itemContent = room.Item.describe();
