@@ -1,3 +1,10 @@
+// window.onload = function () {
+//     document.getElementById("textarea").style.display = "none";
+//     document.getElementById("itemArea").style.display = "none";
+//     document.getElementById("startArea").style.display = "block";
+//     document.getElementById("startArea").innerHTML = "Type start to play.";
+// }
+
 class Room {
     constructor(name, description, item) {
         this._name = name;
@@ -325,6 +332,12 @@ const Dagger = new Enemy("Dagger", "its shiny", "throw")
 
 
 // document.getElementById("textarea").innerHTML = Kitchen.describe();
+
+// function startArea() {
+//     document.getElementById("startArea").style.display = "none";
+// }
+
+
 function talk() {
 
     // if (this.command == "talk" && this.currentRoom == "Office") {
@@ -399,7 +412,7 @@ function removeItem() {
 
 
 function startGame() {   //start in the Entrance
-
+    // startArea();
     currentRoom = Entrance;
     backPack = [];
     displayRoomInfo(currentRoom);
