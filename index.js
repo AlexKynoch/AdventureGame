@@ -107,7 +107,7 @@ class Character {
     }
 
     describe() {
-        return "you see " + this.name + " a " + this._description;
+        return "you see " + this.name + " the " + this._description;
     }
 
     talk() {
@@ -319,7 +319,9 @@ const Necklace = new Jewelry("Tiara", "its really shiny", "neck")
 //Character objects
 const Guard = new Character("Gary", "Security Guard")
 // console.log(Guard.describe());
+const Receptionist = new Character("Bob", "Receptionist is typeing")
 Office.Character = Guard;
+Hall.Character = Receptionist;
 Guard.conversation = "Ooh no you cant come in here";
 //Enemy objects
 // console.log(Guard.conversation);
@@ -396,9 +398,14 @@ function displayRoomInfo(room) {
     if (room.name == "Office") {
         displayCharacterInfo();
 
+    } else if (room.name == "Hall") {
+        document.getElementById("characterArea").style.display = "block";
+        document.getElementById("characterArea").innerHTML = Receptionist.describe();
     } else {
         document.getElementById("characterArea").style.display = "none";
     }
+
+
 
 
 
@@ -406,10 +413,10 @@ function displayRoomInfo(room) {
     if (room.Item) {
         itemContent = room.Item.describe();
         document.getElementById("itemArea").innerHTML = itemContent;
-    }
-    document.getElementById("ui").focus();
-}
 
+        document.getElementById("ui").focus();
+    }
+}
 
 function removeItem() {
     switch (backPack.includes('')) {
