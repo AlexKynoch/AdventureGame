@@ -247,13 +247,13 @@ const CandleStick = new Item("Candlestick", "It looks heavy");
 const Key = new Item("Key", "It is big and silver colored - and looks like it might open a safe.");
 const GrassHopper = new Item("Grass Hopper", "looks like its sunbathing on a rock.");
 const Net = new Item("Net", "The net has a fine mesh for catching fish.");
-const Safe = new Item("Safe", "The is hidden behind a plant.");
+const Safe = new Item("Safe", "The is hidden behind a plant and.");
 // console.log(Spider.describe())
 
 
 //room objects
 
-const Entrance = new Room("Entrance", "Steps lead up to an old wooden paneled door", Money);
+const Entrance = new Room("Entrance", "Steps lead up to an old wooden paneled door.  You can go north", Money);
 const Hall = new Room("Hall", "a reception desk.", FloorPlan);
 const Kitchen = new Room("Kitchen", "a sink", Key);
 const Garden = new Room("Garden", "Some dead plants", GrassHopper)
@@ -373,9 +373,30 @@ function give(item) {
         // if (((backPack.includes('Note')) && (currentRoom.name == "Hall"))) {
         backPack.shift();
         document.getElementById("giveArea").style.display = "Block";
-        document.getElementById("giveArea").innerHTML = "you give the £20 note to Bob he is soo happy he dances out of the reception Area. All the way to the vending machine in the kitchen"
+        document.getElementById("giveArea").innerHTML = "you give the £20 note to Bob he is soo happy he dances out of the reception Area. All the way to the vending machine in the kitchen. you look at the floor plan, looks like the office is west then south maybe the safe is there"
         // document.getElementById("characterArea").style.display = "none";
         document.getElementById("ui").value = "";
+
+
+    } else if ((x) && (currentRoom.name == "Office") && (command == "give")) {
+        console.log("passed")
+        // if (((backPack.includes('Note')) && (currentRoom.name == "Hall"))) {
+        backPack.shift();
+        document.getElementById("giveArea").style.display = "Block";
+        document.getElementById("giveArea").innerHTML = "you give the floor Plan to Gary he looks cross and pulls out his gun have you stolen the floor plan? are you trying to rob the safe? Gary shoots you in the leg you hobble out of the house as quick as you can never to return!!!!!!!"
+        // document.getElementById("characterArea").style.display = "none";
+        // document.getElementById("ui").value = "";
+        backPack.shift();
+        document.getElementById("talkArea").style.display = "none";
+        document.getElementById("warningArea").style.display = "none";
+        document.getElementById("characterArea").style.display = "none";
+        document.getElementById("itemArea").style.display = "none";
+        document.getElementById("talkArea").style.display = "none";
+        document.getElementById("ui").style.display = "none";
+        document.getElementById("textarea").style.display = "none";
+        document.getElementById("backPackPrint").style.display = "none";
+        document.getElementById("end").style.display = "block";
+        document.getElementById("end").innerHTML = "The End";
 
 
     } else {
@@ -388,22 +409,15 @@ function talk() {
 
     // if (this.command == "talk" && this.currentRoom == "Office") {
     if (currentRoom.name == "Office") {
-        switch (command) {
-            case ("talk"):
-                document.getElementById("talkArea").style.display = "block";
-                document.getElementById("talkArea").innerHTML = Guard.conversation;
-                break;
-            // case ("get"):
-            //     document.getElementById("talkArea").style.display = "none";
 
-            //     // console.log(currentRoom)
-            //     currentRoom.item.get();
-            //     currentRoom.removeItem()
-            //     document.getElementById("ui").value = "";
-            //     break;
-            default:
-                console.log("oops not sure what happened there");
-        }
+        document.getElementById("talkArea").style.display = "block";
+        document.getElementById("talkArea").innerHTML = Guard.conversation;
+
+    } else if (currentRoom.name == "Hall") {
+        document.getElementById("talkArea").style.display = "block";
+        document.getElementById("talkArea").innerHTML = Receptionist.conversation;
+    } else {
+        console.log("well that didnt work")
     }
 
 

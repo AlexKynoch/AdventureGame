@@ -15,3 +15,7 @@ img {
   width: 30%;
   border: 1px solid #4caf50;
 }
+
+#end {
+  font-size: 60px;
+}
