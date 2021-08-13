@@ -1,6 +1,7 @@
 window.onload = function () {
     // document.getElementById("textarea").style.display = "none";
     document.getElementById("itemArea").style.display = "none";
+    document.getElementById("giveArea").style.display = "none";
     // document.getElementById("startArea").style.display = "block";
     // document.getElementById("startArea").innerHTML = "Type start to play.";
 }
@@ -86,7 +87,9 @@ class Character {
     }
 
     get conversation() {
-        return this._conversation;
+        document.getElementById("ui").value = '';
+        return this.name + " Says " + this._conversation + ".";
+
     }
 
 
@@ -107,7 +110,7 @@ class Character {
     }
 
     describe() {
-        return "you see " + this.name + " the " + this._description;
+        return this.name + " the " + this._description;
     }
 
     talk() {
@@ -160,7 +163,7 @@ class Item {
     }
 
     describe() {
-        return "you find a  " + this.name + " it is " + this._description;
+        return "you see a  " + this.name + " it is " + this._description;
     }
 
     // remove(item) {
@@ -237,14 +240,14 @@ class Jewelry extends Item {
 }
 //item objects
 const Money = new Item("Note", " a £20 note.");
-const FloorPlan = new Item("Floor Plan", "framed on the wall");
+const FloorPlan = new Item("Floor Plan", "just out of your reach and you can only see part of it behind the desk");
 const Flyer = new Item("Flyer", " A5 size and something is writen on it");
 const Spider = new Item("Spider", "its a fluffy tarantula");
 const CandleStick = new Item("Candlestick", "It looks heavy");
 const Key = new Item("Key", "It is big and silver colored - and looks like it might open a safe.");
 const GrassHopper = new Item("Grass Hopper", "looks like its sunbathing on a rock.");
 const Net = new Item("Net", "The net has a fine mesh for catching fish.");
-const Safe = new Item("Safe", "The safe is locked.");
+const Safe = new Item("Safe", "The is hidden behind a plant.");
 // console.log(Spider.describe())
 
 
@@ -319,9 +322,10 @@ const Necklace = new Jewelry("Tiara", "its really shiny", "neck")
 //Character objects
 const Guard = new Character("Gary", "Security Guard")
 // console.log(Guard.describe());
-const Receptionist = new Character("Bob", "Receptionist is typeing")
+const Receptionist = new Character("Bob", "receptionist is typing, if only you could get him to move from reception.")
 Office.Character = Guard;
 Hall.Character = Receptionist;
+Receptionist.conversation = "What do you want, im soo hungry, and ive left my wallet at home. "
 Guard.conversation = "Ooh no you cant come in here";
 //Enemy objects
 // console.log(Guard.conversation);
@@ -354,6 +358,31 @@ function setUpPage() {
     document.getElementById("itemArea").style.display = "block";
     document.getElementById("ui").value = '';
 }
+
+function give(item) {
+    console.log("im going to give function");
+    let x = false
+    backPack.map((item) => {
+        if (JSON.stringify(backPack).includes(item.name)) {
+            x = true
+        }
+
+    })
+    if ((x) && (currentRoom.name == "Hall") && (command == "give")) {
+        console.log("passed")
+        // if (((backPack.includes('Note')) && (currentRoom.name == "Hall"))) {
+        backPack.shift();
+        document.getElementById("giveArea").style.display = "Block";
+        document.getElementById("giveArea").innerHTML = "you give the £20 note to Bob he is soo happy he dances out of the reception Area. All the way to the vending machine in the kitchen"
+        // document.getElementById("characterArea").style.display = "none";
+        document.getElementById("ui").value = "";
+
+
+    } else {
+        document.getElementById("giveArea").style.display = "none";
+    }
+}
+
 
 function talk() {
 
@@ -445,12 +474,13 @@ function startGame() {   //start in the Entrance
             command = document.getElementById("ui").value;
 
             const directions = ["north", "south", "east", "west"]
-            const commands = ["get", "use", "look", "talk", "start"]
+            const commands = ["get", "give", "use", "talk", "start"]
 
             // console.log(command)
             if (directions.includes(command.toLowerCase())) {
                 currentRoom = currentRoom.move(command);
                 document.getElementById("talkArea").style.display = "none";
+                give();
                 displayRoomInfo(currentRoom);
                 document.getElementById("ui").value = "";
 
@@ -461,10 +491,13 @@ function startGame() {   //start in the Entrance
 
             } else if (command == "talk") {
                 talk();
+            } else if (command == "give") {
+                give();
 
 
             } else if (command == "start") {
                 setUpPage();
+                console.log(command);
 
             } else {
 
