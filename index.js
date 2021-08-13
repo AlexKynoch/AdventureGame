@@ -247,7 +247,7 @@ const CandleStick = new Item("Candlestick", "It looks heavy");
 const Key = new Item("Key", "It is big and silver colored - and looks like it might open a safe.");
 const GrassHopper = new Item("Grass Hopper", "looks like its sunbathing on a rock.");
 const Net = new Item("Net", "The net has a fine mesh for catching fish.");
-const Safe = new Item("Safe", "The is hidden behind a plant and.");
+const Safe = new Item("Safe", "hidden behind a plant and ");
 // console.log(Spider.describe())
 
 
