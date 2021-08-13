@@ -16,6 +16,11 @@ img {
   border: 1px solid #4caf50;
 }
 
+#giveArea {
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
 #end {
   font-size: 60px;
 }

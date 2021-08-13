@@ -253,7 +253,7 @@ const Safe = new Item("Safe", "hidden behind a plant and ");
 
 //room objects
 
-const Entrance = new Room("Entrance", "Steps lead up to an old wooden paneled door.  You can go north", Money);
+const Entrance = new Room("Entrance", " steps lead up to an old wooden paneled door to a large statley home your pal told you they have a safe here that no-one can crack your happy to have a go but, are not sure of the layout.  You can go north", Money);
 const Hall = new Room("Hall", "a reception desk.", FloorPlan);
 const Kitchen = new Room("Kitchen", "a sink", Key);
 const Garden = new Room("Garden", "Some dead plants", GrassHopper)
@@ -373,7 +373,7 @@ function give(item) {
         // if (((backPack.includes('Note')) && (currentRoom.name == "Hall"))) {
         backPack.shift();
         document.getElementById("giveArea").style.display = "Block";
-        document.getElementById("giveArea").innerHTML = "you give the £20 note to Bob he is soo happy he dances out of the reception Area. All the way to the vending machine in the kitchen. you look at the floor plan, looks like the office is west then south maybe the safe is there"
+        document.getElementById("giveArea").innerHTML = "you give the £20 note to Bob he is soo happy he dances out of the reception Area. All the way to the vending machine in the kitchen. you look at the floor plan, looks like the office is west then south maybe the safe is there best get the floor plan anyway"
         // document.getElementById("characterArea").style.display = "none";
         document.getElementById("ui").value = "";
 
